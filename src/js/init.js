@@ -40,10 +40,12 @@ export default {
       targetStyles: ['border', 'box', 'break', 'text-decoration'],
       ignoreElements: [],
       imageStyle: 'width:100%;',
+      tableHeaderRow: false,
       repeatTableHeader: true,
       css: null,
       style: null,
-      scanStyles: true
+      scanStyles: true,
+      debug: false
     }
 
     // Check if a printable document or object was supplied
@@ -83,10 +85,12 @@ export default {
         params.targetStyles = typeof args.targetStyles !== 'undefined' ? args.targetStyles : params.targetStyles
         params.ignoreElements = typeof args.ignoreElements !== 'undefined' ? args.ignoreElements : params.ignoreElements
         params.imageStyle = typeof args.imageStyle !== 'undefined' ? args.imageStyle : params.imageStyle
+        params.tableHeaderRow = typeof args.tableHeaderRow !== 'undefined' ? args.tableHeaderRow : params.tableHeaderRow
         params.repeatTableHeader = typeof args.repeatTableHeader !== 'undefined' ? args.repeatTableHeader : params.repeatTableHeader
         params.css = typeof args.css !== 'undefined' ? args.css : params.css
         params.style = typeof args.style !== 'undefined' ? args.style : params.style
         params.scanStyles = typeof args.scanStyles !== 'undefined' ? args.scanStyles : params.scanStyles
+        params.debug = typeof args.debug !== 'undefined' ? args.debug : params.debug
         break
       default:
         throw new Error('Unexpected argument type! Expected "string" or "object", got ' + typeof args)

@@ -34,6 +34,10 @@ const Print = {
             printDocument.head.appendChild(style)
           }
 
+          if (params.debug) {
+            console.log('HTML', printDocument.documentElement.outerHTML)
+          }
+
           // If printing image, wait for it to load inside the iframe
           if (params.type === 'image') {
             loadIframeImages(printDocument, params).then(() => {

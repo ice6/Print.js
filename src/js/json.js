@@ -53,27 +53,25 @@ function jsonToHTML (params) {
   let properties = params.properties
 
   // Create a html table
-  let htmlData = '<table style="border-collapse: collapse; width: 100%;">'
+  let htmlData = '<table>'
 
-  // Check if the header should be repeated
-  if (params.repeatTableHeader) {
-    htmlData += '<thead>'
-  }
-
-  // Add the table header row
-  htmlData += '<tr>'
-
-  // Add the table header columns
-  for (let a = 0; a < properties.length; a++) {
-    htmlData += '<th style="width:' + properties[a].columnSize + ';' + params.gridHeaderStyle + '">' + capitalizePrint(properties[a].displayName) + '</th>'
-  }
-
-  // Add the closing tag for the table header row
-  htmlData += '</tr>'
-
-  // If the table header is marked as repeated, add the closing tag
-  if (params.repeatTableHeader) {
-    htmlData += '</thead>'
+  if (params.tableHeaderRow) {
+    // Check if the header should be repeated
+    if (params.repeatTableHeader) {
+      htmlData += '<thead>'
+    }
+    // Add the table header row
+    htmlData += '<tr>'
+    // Add the table header columns
+    for (let a = 0; a < properties.length; a++) {
+      htmlData += '<th style="width:' + properties[a].columnSize + ';' + params.gridHeaderStyle + '">' + capitalizePrint(properties[a].displayName) + '</th>'
+    }
+    // Add the closing tag for the table header row
+    htmlData += '</tr>'
+    // If the table header is marked as repeated, add the closing tag
+    if (params.repeatTableHeader) {
+      htmlData += '</thead>'
+    }
   }
 
   // Create the table body
