@@ -1,190 +1,195 @@
 <html>
-  <script src='./dist/print.js'></script>
-  <script type="text/javascript">
-    function printPdf() {
-      printJS('test.pdf');
-    }
+<script src='./dist/print.js'></script>
+<script type="text/javascript">
+  function printPdf () {
+    printJS('test.pdf');
+  }
 
-    function printPdfWithModal() {
-        printJS({
-            printable: 'test.pdf',
-            type: 'pdf',
-            showModal: true
-        });
-    }
-    
-    function printPdfWithModalAndCloseCallback() {
-        printJS({
-            printable: 'test.pdf',
-            type: 'pdf',
-            showModal: true,
-            onPrintDialogClose: () => console.log('The print dialog was closed'),
-            onPdfOpen: () => console.log('Pdf was opened in a new tab due to an incompatible browser')
-        });
-    }
+  function printPdfWithModal () {
+    printJS({
+      printable: 'test.pdf',
+      type: 'pdf',
+      showModal: true
+    });
+  }
 
-    function printHtml() {
-      printJS({
-        printable: 'test',
-        type: 'html'
+  function printPdfWithModalAndCloseCallback () {
+    printJS({
+      printable: 'test.pdf',
+      type: 'pdf',
+      showModal: true,
+      onPrintDialogClose: () => console.log('The print dialog was closed'),
+      onPdfOpen: () => console.log('Pdf was opened in a new tab due to an incompatible browser')
+    });
+  }
+
+  function printHtml () {
+    printJS({
+      printable: 'test',
+      type: 'html'
+    });
+  }
+
+  function printHtmlCustomStyle () {
+    const style = '@page { margin: 0 } @media print { h1 { color: blue } }'
+
+    printJS({
+      printable: 'test',
+      type: 'html',
+      style: style,
+      scanStyles: false
+    });
+  }
+
+  function printHtmlCss () {
+    printJS({
+      printable: 'test',
+      type: 'html',
+      css: 'test.css',
+      scanStyles: false
+    });
+  }
+
+  function printRawHtml () {
+    printJS({
+      printable: '' +
+      '<h1>print js is cool</h1>' +
+      '<p>it can print raw html</p>' +
+      '<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538122122428&di=05a999d8258e921e4497ce4080beda00&imgtype=0&src=http%3A%2F%2Fimg05.tooopen.com%2Fimages%2F20150529%2Ftooopen_sy_127162097995.jpg" /> ' +
+      '<img src="https://avatars0.githubusercontent.com/u/16927940?s=256&v=4" /> ' +
+      '<img src="http://dpic.tiankong.com/sg/9c/QJ8137200608.jpg?x-oss-process=style/670w" /> ' +
+      '<img src="https://p9.pstatp.com/weili/l/56672205148391985.jpg" /> ' +
+      '<img src="https://atars0.githubusercontent.com/u/889040?s=256&v=4" /> ' +
+      '<img src="https://www.google.com/images/branding/golelogo/2x/googlelogo_color_272x92dp.png" /> ',
+      type: 'rawHtml',
+      css: 'test.css',
+      showModal: true,
+      scanStyles: false
+    });
+  }
+
+  function printJson () {
+    let data = [];
+    for (let i = 0; i <= 1000; i++) {
+      data.push({
+        test1: createRandomString(),
+        test2: createRandomString()
       });
     }
 
-    function printHtmlCustomStyle() {
-      const style = '@page { margin: 0 } @media print { h1 { color: blue } }'
+    printJS(
+      {
+        printable: data,
+        properties: [{
+          field: 'test1',
+          displayName: 'test 1',
+          columnSize: 1
+        }, {
+          field: 'test2',
+          displayName: 'test 2',
+          columnSize: 4
+        }],
+        type: 'json'
+      })
+  }
 
-      printJS({
-        printable: 'test',
-        type: 'html',
-        style: style,
-        scanStyles: false
+  function printStyledJson () {
+    let data = [
+      {
+        test1: 'Test1 string',
+        test2: 'Test2 string'
+      },
+      {
+        test1: 'more Test1 string',
+        test2: 'more Test2 string'
+      }
+    ]
+
+    printJS({
+      printable: data,
+      properties: ['test1', 'test2'],
+      type: 'json',
+      gridStyle: 'border: 2px solid #3971A5;',
+      gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;'
+    })
+  }
+
+  function printNestedJson () {
+    let data = [];
+    for (let i = 0; i <= 100; i++) {
+      data.push({
+        test1: createRandomString(),
+        test2: {
+          a: createRandomString()
+        }
       });
     }
 
-    function printHtmlCss() {
-        printJS({
-            printable: 'test',
-            type: 'html',
-            css: 'test.css',
-            scanStyles: false
-        });
-    }
+    printJS(
+      {
+        printable: data,
+        properties: [{
+          field: 'test1',
+          displayName: 'test 1',
+          columnSize: 1
+        }, {
+          field: 'test2.a',
+          displayName: 'test 2 - a',
+          columnSize: 4
+        }],
+        type: 'json'
+      })
+  }
 
-    function printRawHtml() {
-        printJS({
-            printable: '' +
-            '<h1>print js is cool</h1>' +
-            '<p>it can print raw html</p>' +
-            '<img src="https://avatars0.githubusercontent.com/u/16927940?s=60&v=4" /> '+
-            '<img src="https://avatars0.githubusercontent.com/u/16927940?s=128&v=4" /> '+
-            '<img src="https://avatars0.githubusercontent.com/u/16927940?s=256&v=4" /> '+
-            '<img src="https://avatars0.githubusercontent.com/u/889040?s=64&v=4" /> '+
-            '<img src="https://avatars0.githubusercontent.com/u/889040?s=128&v=4" /> '+
-            '<img src="https://avatars0.githubusercontent.com/u/889040?s=256&v=4" /> '+
-            '<img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" /> ',
-            type: 'rawHtml',
-            css: 'test.css',
-            showModal: true,
-            scanStyles: false
-        });
-    }
+  function createRandomString () {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    function printJson() {
-      let data = [];
-      for (let i=0; i <= 1000; i++){
-        data.push({
-          test1: createRandomString(),
-          test2: createRandomString()
-        });
-      }
+    for (var i = 0; i < 5; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-      printJS(
-        {
-          printable: data,
-          properties: [{
-            field: 'test1',
-            displayName: 'test 1',
-            columnSize: 1
-          },{
-            field: 'test2',
-            displayName: 'test 2',
-            columnSize: 4
-          }],
-          type: 'json'
-        })
-    }
-
-    function printStyledJson() {
-        let data = [
-            {
-                test1: 'Test1 string',
-                test2: 'Test2 string'
-            },
-            {
-                test1: 'more Test1 string',
-                test2: 'more Test2 string'
-            }
-        ]
-
-        printJS({printable: data, properties: ['test1', 'test2'], type: 'json', gridStyle: 'border: 2px solid #3971A5;', gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;'})
-    }
-
-    function printNestedJson() {
-      let data = [];
-      for (let i=0; i <= 100; i++){
-        data.push({
-          test1: createRandomString(),
-          test2: {
-            a: createRandomString()
-          }
-        });
-      }
-
-      printJS(
-        {
-          printable: data,
-          properties: [{
-            field: 'test1',
-            displayName: 'test 1',
-            columnSize: 1
-          },{
-            field: 'test2.a',
-            displayName: 'test 2 - a',
-            columnSize: 4
-          }],
-          type: 'json'
-        })
-    }
-
-    function createRandomString() {
-      var text = "";
-      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-      for (var i = 0; i < 5; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-      return text;
-    }
-  </script>
-  <body>
-    <section id="test" class="test">
-      <h1>Print.js Test Page</h1>
-      <p>
+    return text;
+  }
+</script>
+<body>
+<section id="test" class="test">
+    <h1>Print.js Test Page</h1>
+    <p>
         <button onClick='printPdf();'>
-          Print PDF
+            Print PDF
         </button>
         <button onClick='printPdfWithModal();'>
-          Print PDF with Loading Modal
+            Print PDF with Loading Modal
         </button>
         <button onClick='printPdfWithModalAndCloseCallback();'>
-          Print PDF with Loading Modal and close callback
+            Print PDF with Loading Modal and close callback
         </button>
-      </p>
-      <p>
+    </p>
+    <p>
         <button onClick='printHtml();'>
-          Print HTML
+            Print HTML
         </button>
         <button onClick='printHtmlCustomStyle();'>
-          Print HTML with custom style
+            Print HTML with custom style
         </button>
         <button onClick='printHtmlCss();'>
-          Print HTML with custom css
+            Print HTML with custom css
         </button>
         <button onClick='printRawHtml();'>
-          Print HTML with rawHtml
+            Print HTML with rawHtml
         </button>
-      </p>
-      <p>
+    </p>
+    <p>
         <button onClick='printJson();'>
-          Print JSON
+            Print JSON
         </button>
         <button onClick='printStyledJson();'>
-          Print Styled JSON
+            Print Styled JSON
         </button>
         <button onClick='printNestedJson();'>
-          Print Nested JSON
+            Print Nested JSON
         </button>
-      </p>
-    </section>
-  </body>
+    </p>
+</section>
+</body>
 </html>
